@@ -28,7 +28,8 @@ public class GNRCamController : MonoBehaviour {
 		if (h != 0.0f || v != 0.0f) {
 			yaw = (yaw + h * angularSpeed * Time.deltaTime) % 360f;
 			pitch = Mathf.Clamp(pitch + v * angularSpeed * Time.deltaTime, 0, 90);
-			myTransform.rotation = Quaternion.AngleAxis(yaw, Vector3.up) * Quaternion.AngleAxis(pitch, Vector3.left);
+			myTransform.parent.localRotation = Quaternion.AngleAxis(yaw, Vector3.up);
+			myTransform.localRotation = Quaternion.AngleAxis(pitch, Vector3.left);
 		}
 		
 		if (shootDelay > 0.0000000001 ) {

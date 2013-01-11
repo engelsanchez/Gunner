@@ -46,6 +46,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\GNRBullet.cs" />
      <Compile Include="Assets\Scripts\GNRCamController.cs" />
+     <Compile Include="Assets\Scripts\GNREnemyDot.cs" />
+     <Compile Include="Assets\Scripts\GNREnemySeeker.cs" />
      <Compile Include="Assets\Scripts\GNRPlayerCannon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
