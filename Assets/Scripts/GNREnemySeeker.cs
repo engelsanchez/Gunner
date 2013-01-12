@@ -61,4 +61,8 @@ public class GNREnemySeeker : MonoBehaviour {
 		x = Mathf.Clamp01(x);
 		return x < .5f ? 2 * x : 2 - 2 * x;
 	}
+	
+	public void OnDrawGizmos() {
+		Gizmos.DrawIcon(transform.position, "EnemyIcon.png", false);
+	}
 }
