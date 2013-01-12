@@ -8,14 +8,34 @@ public class GNREnemySeeker : MonoBehaviour {
 	public float near = 2f;
 	public float bulletDamage = 10f;
 	
-	
 	float hitpoints = 100f;
 	Transform myTransform;
 	Color origColor;
+	float origHeight = 0f;
+	float minHeight = 1f;
+	
+	public float GroundHeight {
+		get {
+			Vector3 pos = myTransform.position;
+			RaycastHit hit = new RaycastHit();
+			int onlyTerrain = ~LayerMask.NameToLayer("Terrain");
+			float ofs = 1.0f;
+			if (Physics.Raycast(pos + Vector3.up * ofs, Vector3.down, out hit, float.MaxValue, onlyTerrain)) {
+				return hit.distance - ofs;
+			} else if (Physics.Raycast(pos + Vector3.down * ofs, Vector3.up, out hit, float.MaxValue, onlyTerrain)) {
+				return -hit.distance + ofs;
+			} else 
+				return origHeight;
+		}
+	}
 	
 	public void Awake () {
 		myTransform = transform;
 		origColor = renderer.material.color;
+	}
+	
+	public void Start() {
+		origHeight = GroundHeight;
 	}
 	
 	public void Update () {
@@ -24,6 +44,12 @@ public class GNREnemySeeker : MonoBehaviour {
 		if (distance > near) {
 			float delta = Mathf.Clamp(speed * Time.deltaTime, 0, distance - near);
 			myTransform.Translate(dir.normalized * delta);
+		}
+		float h = GroundHeight;
+		Debug.Log("Current height is "+h+", orig is "+origHeight+" "+myTransform.position);
+		float dh = origHeight - h;
+		if (Mathf.Abs(dh) > 1e-3) {
+			myTransform.Translate(Vector3.up * dh, Space.World);
 		}
 	}
 	
@@ -59,6 +85,7 @@ public class GNREnemySeeker : MonoBehaviour {
 	
 	public static float Curve(float x) {
 		x = Mathf.Clamp01(x);
+		// Simple Triangular shape (zero to one, then down to zero
 		return x < .5f ? 2 * x : 2 - 2 * x;
 	}
 	
