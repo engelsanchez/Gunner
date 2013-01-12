@@ -1,10 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Enemy dot on the radar screen that tracks the position of
+/// the enemy relative to the player.
+/// </summary>
 public class GNREnemyDot : MonoBehaviour {
 	public Transform target;
 	public Transform origin;
 	public float range = 100f;
+	public float visibilityRadius = 1f;
+	
+	Renderer[] renderers;
+	
+	public void Awake() {
+		renderers = GetComponentsInChildren<Renderer>();
+	}
 	
 	public void TrackPosition() {
 		Vector3 pos = transform.localPosition;
@@ -16,6 +27,10 @@ public class GNREnemyDot : MonoBehaviour {
 		pos.x = Proj2(ofs, right);
 		pos.y = Proj2(ofs, up);
 		transform.localPosition = pos;
+		bool visible = pos.x * pos.x + pos.y * pos.y <= visibilityRadius * visibilityRadius;
+		foreach (Renderer r in renderers) {
+			r.enabled = visible;
+		}
 	}
 	
 	public void Update () {

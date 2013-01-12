@@ -12,7 +12,6 @@ public class GNREnemySeeker : MonoBehaviour {
 	Transform myTransform;
 	Color origColor;
 	float origHeight = 0f;
-	float minHeight = 1f;
 	
 	public float GroundHeight {
 		get {
@@ -46,7 +45,6 @@ public class GNREnemySeeker : MonoBehaviour {
 			myTransform.Translate(dir.normalized * delta);
 		}
 		float h = GroundHeight;
-		Debug.Log("Current height is "+h+", orig is "+origHeight+" "+myTransform.position);
 		float dh = origHeight - h;
 		if (Mathf.Abs(dh) > 1e-3) {
 			myTransform.Translate(Vector3.up * dh, Space.World);
