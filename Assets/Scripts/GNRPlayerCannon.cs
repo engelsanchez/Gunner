@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GNRPlayerCannon : MonoBehaviour {
 	public GNRBullet bulletPrefab;
-	public float bulletSpeed = 50f;
+	public float bulletSpeed = 500f;
 	
 	public void Shoot() {
 		GNRBullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation) as GNRBullet;

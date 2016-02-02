@@ -30,7 +30,7 @@ public class GNREnemySeeker : MonoBehaviour {
 	
 	public void Awake () {
 		myTransform = transform;
-		origColor = renderer.material.color;
+		origColor = GetComponent<Renderer>().material.color;
 	}
 	
 	public void Start() {
@@ -67,7 +67,7 @@ public class GNREnemySeeker : MonoBehaviour {
 	bool hitAction = false;
 	
 	public IEnumerator HitAction() {
-		Material mat = renderer.material;
+		Material mat = GetComponent<Renderer>().material;
 		Color targetColor = Color.yellow;
 		float t0 = Time.time;
 		float maxTime = 0.1f;

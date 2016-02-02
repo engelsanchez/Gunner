@@ -1,16 +1,20 @@
 using UnityEngine;
+
 using System.Collections;
 
 public class GNRBullet : MonoBehaviour {
 	
 	public float maxLife = 5f;
+	public bool shoot = false;
+	public Vector3 shootDirection;
+	public float shootForce;
 	
 	public struct Params {
 		public Vector3 dir;
-		public float speed;
+		public float force;
 		public Params(Vector3 dir, float speed) {
 			this.dir = dir;
-			this.speed = speed;
+			this.force = speed;
 		}
 	}
 	
@@ -24,8 +28,17 @@ public class GNRBullet : MonoBehaviour {
 		}
 		Destroy(gameObject, 0f);
 	}
-	
+
+	public void FixedUpdate() {
+		if (shoot) {
+			GetComponent<Rigidbody>().AddForce(shootDirection * shootForce);
+			shoot = false;
+		}
+	}
+
 	public void Shoot(Params p) {
-		StartCoroutine(ShootRtn(p.dir, p.speed));
+		shoot = true;
+		shootDirection = p.dir;
+		shootForce = p.force;
 	}
 }
